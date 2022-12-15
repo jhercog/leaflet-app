@@ -1,0 +1,42 @@
+// =============================================================================
+// Font Face
+// =============================================================================
+@mixin font-face($name, $suffix, $weight: null, $style: null, $exts: eot svg ttf woff woff2) {
+  $font-path: "assets/fonts/";
+  $src: null;
+  $extmods: (
+    eot: "?#iefix",
+    svg: "#" + str-replace($name, " ", "_"),
+  );
+  $formats: (
+    eot: "embedded-opentype",
+    otf: "opentype",
+    ttf: "truetype",
+  );
+  @each $ext in $exts {
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append(
+      $src,
+      url(quote($font-path + $name + "/" + $ext + "/" + $name + "-" + $suffix + "." + $extmod)) format(quote($format)),
+      comma
+    );
+  }
+  @font-face {
+    font-family: quote($name);
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+    font-display: swap;
+  }
+}
+
+Include fonts
+@include font-face("Poppins", "Regular-400", 400, normal, woff woff2);
+@include font-face("Poppins", "RegularItalic-400", 400, italic, woff woff2);
+@include font-face("Poppins", "Medium-500", 500, normal, woff woff2);
+@include font-face("Poppins", "MediumItalic-500", 500, italic, woff woff2);
+@include font-face("Poppins", "SemiBold-600", 600, normal, woff woff2);
+@include font-face("Poppins", "SemiBoldItalic-600", 600, italic, woff woff2);
+@include font-face("Poppins", "Bold-700", 700, normal, woff woff2);
+@include font-face("Poppins", "BoldItalic-700", 700, italic, woff woff2);

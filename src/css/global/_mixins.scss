@@ -1,0 +1,12 @@
+// =============================================================================
+// Notch safe-areas
+// =============================================================================
+
+@mixin notch-top($including: 0) {
+  padding-top: calc(constant(safe-area-inset-top) + #{$including}); // for iOS 11.0
+  padding-top: calc(env(safe-area-inset-top) + #{$including}); // for iOS 11.2 +
+}
+@mixin notch-bottom($including: 0) {
+  padding-bottom: calc(constant(safe-area-inset-bottom) + #{$including}); // for iOS 11.0
+  padding-bottom: calc(env(safe-area-inset-bottom) + #{$including}); // for iOS 11.2 +
+}

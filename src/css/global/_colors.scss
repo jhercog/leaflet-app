@@ -1,0 +1,123 @@
+// Generate CSS color variables
+:root {
+  @each $color-group-name, $color-group-map in $identity-colors {
+    @each $color-name, $color-value in $color-group-map {
+      --q-#{$color-name}: #{$color-value};
+    }
+  }
+}
+
+:root {
+  --q-dark: #{$bg-footer-dark};
+  --q-negative: #{get-color(negative, 5)};
+  // --q-bg-header: #{$bg-header-light};
+  // --q-bg-footer: #{$bg-footer-light};
+  // --q-bg-footer-grad: #{$bg-footer-grad-light};
+  // --q-bg-grad: #{$bg-grad-light};
+  // --q-text-color: #{rgba(get-color(primary, 10), 0.8)};
+  // --q-text-disabled-color: #{get-color(primary, 2)};
+  // --b-page-shade-background: #{get-color(primary, 7)};
+  // --b-page-shade-opacity: 0.2;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --q-negative: #{get-color(negative-dark, 5)};
+    // --q-bg-header: #{$bg-header-dark};
+    // --q-bg-footer: #{$bg-footer-dark};
+    // --q-bg-footer-grad: #{$bg-footer-grad-dark};
+    // --q-bg-grad: #{$bg-grad-dark};
+    // --q-text-color: #{rgba(get-color(primary, 0), 0.8)};
+    // --q-text-disabled-color: #{get-color(primary, 8)};
+    // --b-page-shade-background: #{get-color(primary, 10)};
+    // --b-page-shade-opacity: 0.5;
+  }
+}
+
+// Generate text classes
+.text {
+  @include generate-color-classes($attribute: "color");
+}
+// Generate background classes
+.bg {
+  @include generate-color-classes($attribute: "background");
+}
+
+body {
+  color: $text-default-color-light;
+  background: var(--q-primary-9);
+}
+
+.bg-blur {
+  backdrop-filter: blur(7px);
+  background-color: $bg-header-light;
+  .body--dark & {
+    background-color: $bg-header-light;
+  }
+  .body--light & {
+    background-color: $bg-header-dark;
+  }
+}
+
+.bg-header {
+  background: $bg-header-light;
+  .body--light & {
+    background: $bg-header-light;
+  }
+  .body--dark & {
+    background: $bg-header-dark;
+  }
+}
+
+.text-header {
+  color: $bg-header-light;
+  .body--light & {
+    color: $bg-header-light;
+  }
+  .body--dark & {
+    color: $bg-header-dark;
+  }
+}
+
+.bg-footer {
+  background: $bg-footer-light;
+  .body--light & {
+    background: $bg-footer-light;
+  }
+  .body--dark & {
+    background: $bg-footer-dark;
+  }
+}
+
+.text-footer {
+  color: $bg-footer-light;
+  .body--light & {
+    color: $bg-footer-light;
+  }
+  .body--dark & {
+    color: $bg-footer-dark;
+  }
+}
+
+.bg-footer-grad {
+  background: $bg-footer-grad-light;
+  .body--light & {
+    background: $bg-footer-grad-light;
+  }
+  .body--dark & {
+    background: $bg-footer-grad-dark;
+  }
+}
+
+.bg-grad {
+  background: $bg-grad-light;
+  .body--light & {
+    background: $bg-header-light;
+    background: $bg-grad-light;
+  }
+  .body--dark & {
+    background: $bg-header-dark;
+    background: $bg-grad-dark;
+  }
+}
+// @debug .bg-header;

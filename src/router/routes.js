@@ -4,7 +4,12 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      {
+        path: '',
+        name: 'Home',
+        meta: { title: 'Vue - Quasar - Leaflet Implementation', description: 'That project for USA' },
+        component: () => import('pages/Home.vue')
+      }
     ]
   },
 

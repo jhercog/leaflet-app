@@ -5,7 +5,10 @@
         404
       </div>
 
-      <div class="text-h2" style="opacity:.4">
+      <div
+        class="text-h2"
+        style="opacity:.4"
+      >
         Oops. Nothing here...
       </div>
 
@@ -22,10 +25,6 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
 
-export default defineComponent({
-  name: 'ErrorNotFound'
-})
 </script>

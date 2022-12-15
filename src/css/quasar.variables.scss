@@ -1,24 +1,188 @@
-// Quasar SCSS (& Sass) Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+@import "quasar/src/css/variables";
 
-// Check documentation for full list of Quasar variables
+$typography-font-family: "IBM Plex Sans", "Roboto", "Helvetica Neue", Helvetica, "-apple-system", Arial, sans-serif;
 
-// Your own variables (that are declared here) and Quasar's own
-// ones will be available out of the box in your .vue/.scss/.sass files
+$primary: #1b7bc4;
+$secondary: #31826e;
+$accent: #0077c1;
+$positive: #21ba45;
+$negative: #c10015;
+$negative-dark: #ff5722;
+$info: #2196f3;
+$warning: #f2c037;
 
-// It's highly recommended to change the default colors
-// to match your app's branding.
-// Tip: Use the "Theme Builder" on Quasar's documentation website.
+$colors: (
+  primary: $primary,
+  secondary: $secondary,
+  accent: $accent,
+  positive: $positive,
+  negative: $negative,
+  negative-dark: $negative-dark,
+  info: $info,
+  warning: $warning,
+);
 
-$primary   : #1976D2;
-$secondary : #26A69A;
-$accent    : #9C27B0;
+$identity-colors: ();
 
-$dark      : #1D1D1D;
+// Generate Color Classes
+@mixin generate-color-classes($attribute: "color", $prefix: "-") {
+  @each $color-group-name, $color-group-map in $identity-colors {
+    @each $color-name, $color-value in $color-group-map {
+      &#{$prefix}#{$color-name} {
+        #{$attribute}: $color-value;
+        #{$attribute}: var(--q-#{$color-name});
+      }
+    }
+  }
+}
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
+// Lighten a color
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+// Darken a color
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+// Populate Identity Color
+@each $name, $color in $colors {
+  // Current color map
+  $current: ();
+
+  // Generate original color
+  $current: map-merge(
+    $current,
+    (
+      "#{$name}": $color,
+    )
+  );
+
+  // Generate tints
+  @for $i from 0 through 4 {
+    $current: map-merge(
+      $current,
+      (
+        "#{$name}-#{$i}": tint($color, percentage(0.9 - ($i * 0.17))),
+      )
+    );
+  }
+  // Generate mid color
+  $current: map-merge(
+    $current,
+    (
+      "#{$name}-5": $color,
+    )
+  );
+  // Generate shades
+  @for $i from 0 through 4 {
+    $current: map-merge(
+      $current,
+      (
+        "#{$name}-#{$i + 6}": shade($color, percentage(0.16 + ($i * 0.16))),
+      )
+    );
+  }
+  // If the map has not been created
+  @if map-has-key($identity-colors, $name) == false {
+    $identity-colors: map-merge(
+      $identity-colors,
+      (
+        $name: $current,
+      )
+    );
+  }
+}
+
+// Get Identity Color
+@function get-color($name: "primary", $index: 10) {
+  $color-map: map-get($identity-colors, $name);
+  @return map-get($color-map, "#{$name}-#{$index}");
+}
+
+// Default text color
+$text-base-color-light: get-color(primary, 10);
+$text-base-color-dark: get-color(primary, 0);
+$text-default-color-light: rgba($text-base-color-light, 0.8);
+$text-default-color-dark: rgba($text-base-color-dark, 0.8);
+$text-lighten-color-light: rgba($text-base-color-light, 0.5);
+$text-lighten-color-dark: rgba($text-base-color-dark, 0.4);
+$text-disabled-color-light: get-color(primary, 2);
+$text-disabled-color-dark: get-color(primary, 8);
+
+$input-text-color: $text-base-color-light;
+
+// Default controls color
+$controls-base-color-light: get-color(primary, 8);
+$controls-base-color-dark: get-color(primary, 0);
+
+$controls-on-color-light: rgba($text-base-color-light, 0.8);
+$controls-on-color-dark: rgba($text-base-color-dark, 0.8);
+
+$controls-off-color-light: $controls-base-color-dark;
+$controls-off-color-dark: $controls-base-color-light;
+
+$controls-disabled-color-light: $controls-base-color-light;
+$controls-disabled-color-dark: $controls-base-color-dark;
+
+// Background Colors
+$bg-footer-light: tint(map-get($colors, "primary"), 78%); // #{get-color(primary, 2)}
+$bg-header-light: get-color(primary, 0);
+$bg-footer-dark: shade(map-get($colors, "primary"), 78%); // #{get-color(primary, 10)}
+$bg-header-dark: get-color(primary, 9);
+
+$bg-grad-light: linear-gradient(0deg, $bg-footer-light 0%, $bg-header-light 100%);
+$bg-grad-dark: linear-gradient(0deg, $bg-footer-dark 0%, $bg-header-dark 100%);
+
+$bg-footer-grad-light: linear-gradient(to top, $bg-footer-light 30%, rgba($bg-footer-light, 0) 100%);
+$bg-footer-grad-dark: linear-gradient(to top, $bg-footer-dark 30%, rgba($bg-footer-dark, 0) 100%);
+
+$dark-page: $bg-footer-dark;
+
+// Separator Border Color
+$separator-color: rgba(get-color(primary, 5), 0.2);
+$separator-dark-color: rgba(get-color(primary, 5), 0.2);
+
+$breakpoint-xxs-min: 0px;
+$breakpoint-xxs-max: 479px;
+$breakpoint-xs-min: 480px;
+
+$loader-spinner-sm: 8rem;
+$loader-spinner-md: 10rem;
+
+$navbar-button-size: 2rem;
+$navbar-button-size-mini: 1.5rem;
+
+$navbar-padding: 0.5rem;
+$navbar-padding-mini: 0.25rem;
+$navbar-margin-top: 2rem;
+$navbar-margin-top-mini: 1.5rem;
+$navbar-margin-bottom: 0.5rem;
+$navbar-margin-bottom-mini: 0.375rem;
+$navbar-button-padding: 0.25rem;
+$navbar-button-padding-mini: 0.125rem;
+
+$toolbar-min-height: 48px;
+$toolbar-padding: 0 16px;
+$toolbar-inset-size: 64px;
+// $toolbar-title-font-size : 21px
+// $toolbar-title-font-weight : normal
+// $toolbar-title-letter-spacing : .01em
+// $toolbar-title-padding : 0 12px
+
+$page-header-height: 3.5rem;
+$page-header-height-mini: 3rem;
+$page-animation-duration: 0.4s;
+
+$page-footer-height: $navbar-button-size + (2 * $navbar-button-padding) + (2 * $navbar-padding) + $navbar-margin-bottom +
+  $navbar-margin-top;
+$page-footer-height-mini: $navbar-button-size-mini + (2 * $navbar-button-padding-mini) + (2 * $navbar-padding-mini) +
+  $navbar-margin-bottom-mini + $navbar-margin-top-mini;
+
+$button-rounded-border-radius: 2rem;
+
+$dimmed-background: rgba(0, 0, 0, 0.5);
+
+$table-border-color: $separator-color;
+$table-dark-border-color: $separator-dark-color;

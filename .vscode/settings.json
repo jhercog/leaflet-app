@@ -11,5 +11,9 @@
     "javascriptreact",
     "typescript",
     "vue"
-  ]
+  ],
+  "search.exclude": {
+    "**/node_modules": false
+  },
+  "search.useIgnoreFiles": false,
 }

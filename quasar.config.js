@@ -8,11 +8,16 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
 
-
 const ESLintPlugin = require('eslint-webpack-plugin')
 
+const { configure } = require('quasar/wrappers')
+const { readFileSync } = require('fs')
+const { resolve } = require('path')
 
-const { configure } = require('quasar/wrappers');
+const env = require(resolve(__dirname, './.env.js'))
+// const nodeEnv = require(resolve(__dirname, `.env.${process.env.NODE_ENV}.js`))
+// const env = Object.assign(commonEnv, nodeEnv)
+Object.assign(process.env, env)
 
 module.exports = configure(function (ctx) {
   return {
@@ -26,8 +31,9 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
     boot: [
-      
-      'axios',
+      'initApp',
+      'initglobalComponents',
+      'axios'
     ],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
@@ -38,21 +44,21 @@ module.exports = configure(function (ctx) {
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       // 'ionicons-v4',
-      // 'mdi-v5',
+      'mdi-v6'
       // 'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
-      'material-icons', // optional, you are not bound to it
+      // 'roboto-font' // optional, you are not bound to it
+      // 'material-icons' // optional, you are not bound to it
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
-
+      vueRouterMode: 'history', // available values: 'hash', 'history'
+      env,
       // transpile: false,
       // publicPath: '/',
 
@@ -72,28 +78,33 @@ module.exports = configure(function (ctx) {
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      
-      chainWebpack (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }])
+
+      chainWebpack (cfg, { isServer, isClient }) {
+        cfg.plugin('eslint-webpack-plugin')
+          .use(ESLintPlugin, [{ extensions: ['js', 'vue'] }])
+
+        cfg.resolve.alias
+          .set('composables', resolve(__dirname, './src/composables'))
+          .set('db', resolve(__dirname, './src/db'))
       }
-      
+
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-devServer
     devServer: {
-      server: {
-        type: 'http'
+      https: {
+        key: readFileSync(resolve(__dirname, 'SSL/ssl.key')),
+        cert: readFileSync(resolve(__dirname, 'SSL/ssl.cert')),
+        ca: readFileSync('/Users/jelenko/Library/Application Support/mkcert/rootCA.pem')
       },
+      host: 'app.leaflet.loc',
       port: 8080,
-      open: true // opens browser window automatically
+      open: false
     },
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
-      config: {},
-
-      // iconSet: 'material-icons', // Quasar icon set
+      iconSet: 'mdi-v6', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact
@@ -104,12 +115,26 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Meta',
+        'Notify',
+        'LoadingBar'
+      ],
+      config: {
+        loadingBar: {
+          color: 'accent',
+          size: '0.25rem',
+          position: 'bottom'
+        }
+      }
     },
 
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
-    animations: [],
+    animations: [
+      'fadeIn',
+      'fadeOut'
+    ],
 
     // https://v2.quasar.dev/quasar-cli-webpack/developing-ssr/configuring-ssr
     ssr: {
@@ -119,17 +144,15 @@ module.exports = configure(function (ctx) {
       // manualPostHydrationTrigger: true,
 
       prodPort: 3000, // The default port that the production server should use
-                      // (gets superseded if process.env.PORT is specified at runtime)
+      // (gets superseded if process.env.PORT is specified at runtime)
 
       maxAge: 1000 * 60 * 60 * 24 * 30,
-        // Tell browser when a file from the server should expire from cache (in ms)
+      // Tell browser when a file from the server should expire from cache (in ms)
 
-      
       chainWebpackWebserver (chain) {
         chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
+          .use(ESLintPlugin, [{ extensions: ['js'] }])
       },
-      
 
       middlewares: [
         ctx.prod ? 'compression' : '',
@@ -144,17 +167,16 @@ module.exports = configure(function (ctx) {
 
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
       // if using workbox in InjectManifest mode
-      
+
       chainWebpackCustomSW (chain) {
         chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
+          .use(ESLintPlugin, [{ extensions: ['js'] }])
       },
-      
 
       manifest: {
-        name: `Quasar App`,
-        short_name: `Quasar App`,
-        description: `Leaflet implemntation`,
+        name: 'Quasar App',
+        short_name: 'Quasar App',
+        description: 'Leaflet implemntation',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -223,19 +245,17 @@ module.exports = configure(function (ctx) {
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      
+
       chainWebpackMain (chain) {
         chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
+          .use(ESLintPlugin, [{ extensions: ['js'] }])
       },
-      
 
-      
       chainWebpackPreload (chain) {
         chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
-      },
-      
+          .use(ESLintPlugin, [{ extensions: ['js'] }])
+      }
+
     }
   }
-});
+})
