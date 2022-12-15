@@ -19,7 +19,14 @@ const { resolve } = require('path')
 // const env = Object.assign(commonEnv, nodeEnv)
 // Object.assign(process.env, env)
 
+const ssl = {
+  key: readFileSync(resolve(__dirname, 'SSL/ssl.key')),
+  cert: readFileSync(resolve(__dirname, 'SSL/ssl.cert')),
+  ca: readFileSync('/Users/jelenko/Library/Application Support/mkcert/rootCA.pem')
+}
+
 module.exports = configure(function (ctx) {
+  console.log(ctx)
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
     supportTS: false,
@@ -95,12 +102,8 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-devServer
     devServer: {
-      https: {
-        key: readFileSync(resolve(__dirname, 'SSL/ssl.key')),
-        cert: readFileSync(resolve(__dirname, 'SSL/ssl.cert')),
-        ca: readFileSync('/Users/jelenko/Library/Application Support/mkcert/rootCA.pem')
-      },
-      host: 'app.leaflet.loc',
+      https: ctx.dev ? ssl : true,
+      host: ctx.dev ? 'app.leaflet.loc' : 'localhost',
       port: 8080,
       open: false
     },
