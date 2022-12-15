@@ -11,7 +11,7 @@
           color="accent"
         />
         <q-toolbar-title class="text-bold text-subtitle1 text-primary-2">
-          Open Range
+          Open Range Demo App
         </q-toolbar-title>
 
         <q-btn
