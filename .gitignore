@@ -32,7 +32,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-SSL
+
 *.bak
 *.bak.*
 .env.js
