@@ -133,7 +133,7 @@ export const useMap = () => {
       // })
       $map.value.on('locationfound', onLocationFound)
       $map.value.on('locationerror', onLocationError)
-      $map.value.on('pm:create', onLayerCreate)
+      $map.value.on('pm:create pm:cut', onLayerCreate)
       $map.value.on('pm:drag', e => onDrag)
       $map.value.on('pm:drawend', e => onDrawEnd)
 

@@ -22,26 +22,20 @@ export const getLayerFromGeoJson = function (feature) {
         case 'Marker': return new $l.Marker(latlng)
         case 'Circle': return new $l.Circle(latlng, feature.properties.options)
         case 'CircleMarker': return new $l.CircleMarker(latlng, feature.properties.options)
-        case 'Text': return new $l.CircleMarker(latlng)
+        case 'Text': return new $l.Text(latlng)
       }
     },
     onEachFeature: (feature, layer) => {
-      feature.properties.leafletType = feature.properties?.type
-      switch (feature.properties?.type) {
-        case 'Marker':
-          layer.options.icon = $l.divIcon(feature.properties?.options.icon.options)
-          break
-        case 'Text':
-          feature.properties.leafletType = 'Marker'
-          layer.options = merge(layer.options)
-          // console.log(feature.properties.options)
-
-          break
-        case 'Line':
-          feature.properties.leafletType = 'Polyline'
-          break
-        default:
-          break
+      if (!feature.properties) return
+      feature.properties.leafletType = feature.properties.type
+      if (feature.properties.type === 'Marker') {
+        layer.options.icon = $l.divIcon(feature.properties.options.icon.options)
+      } else if (feature.properties.type === 'Text') {
+        feature.properties.leafletType = 'Marker'
+        layer.options = merge(layer.options)
+        // console.log(feature.properties.options)
+      } else if (feature.properties.type === 'Line') {
+        feature.properties.leafletType = 'Polyline'
       }
     },
     markersInheritOptions: true
@@ -107,7 +101,7 @@ export const saveLayer = async function (layer) {
   features[featureIndex] = layerToSave
   this.$patch({ features })
 
-  console.log('Layer to save', layerToSave)
+  // console.log('Layer to save', layerToSave)
 
   try {
     await layers.put(layerToSave)

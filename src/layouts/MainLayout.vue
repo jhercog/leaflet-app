@@ -11,7 +11,7 @@
           color="accent"
         />
         <q-toolbar-title class="text-bold text-subtitle1 text-primary-2">
-          Onaj projekt za USA
+          Open Range
         </q-toolbar-title>
 
         <q-btn

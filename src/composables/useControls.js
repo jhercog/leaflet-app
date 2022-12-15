@@ -234,12 +234,14 @@ export const useControls = () => {
 
   const cutLayer = () => {
     selectedTool.value = 'Cut'
-    disableAll()
-    $map.value.pm.enableDraw('Cut', merge(baseOptions, {
+    // disableAll()
+    const options = merge(baseOptions, {
       templineStyle: { color: 'red', weight: 2, dashArray: '10 10' },
       hintlineStyle: { color: 'red', weight: 2, dashArray: '10 10' },
       layersToCut: $selectionGroup.value.getLayers()
-    }))
+    })
+
+    $map.value.pm.enableDraw('Cut', options)
   }
 
   const rotateLayer = () => {

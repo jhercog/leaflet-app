@@ -4,7 +4,7 @@ import { useLayersStore, useAppStore } from 'stores'
 import { isEmpty, merge } from 'lodash'
 
 export const useLayers = () => {
-  const $l = inject('$l')
+  const $l = inject('$l') // eslint-disable-line
   const $map = computed(() => toRaw(useAppStore().map)) // eslint-disable-line
   const $drawingGroup = computed(() => useAppStore().drawingGroup)
   const $selectionGroup = computed(() => useAppStore().selectionGroup)
@@ -93,16 +93,17 @@ export const useLayers = () => {
   }
 
   const onLayerClick = e => {
-    e.originalEvent?.preventDefault()
-    $l.DomEvent?.stopPropagation(e)
-    $l.DomEvent?.stop(e)
     const { target } = e
 
-    if (target.pm.layerDragEnabled && target.pm.layerDragEnabled()) return
     if ($map.value.pm.globalDragModeEnabled()) return
     if ($map.value.pm.globalCutModeEnabled()) return
     if ($map.value.pm.globalRotateModeEnabled()) return
     if ($map.value.pm.globalRemovalModeEnabled()) return
+    if (target.pm.layerDragEnabled && target.pm.layerDragEnabled()) return
+
+    e.originalEvent?.preventDefault()
+    $l.DomEvent?.stopPropagation(e)
+    $l.DomEvent?.stop(e)
 
     if ($map.value.pm.Keyboard.isShiftKeyPressed()) {
       target.pm.toggleEdit()
@@ -165,18 +166,20 @@ export const useLayers = () => {
   const onLayerCut = ({ layer, originalLayer }) => {
     useAppStore().$patch({ selectedTool: 'Select' })
     originalLayer.cut = true
-    const layerToSave = merge(layer, {
+    const layerToSave = merge(layer, { // eslint-disable-line
       feature: {
         properties: originalLayer.feature.properties,
         selected: originalLayer.feature.selected,
         _id: originalLayer.feature._id
       }
     })
-    // console.log('onLayerCut', { layer, originalLayer })
+    console.log('onLayerCut', { layer, originalLayer })
     // const _id = originalLayer.feature._id
     // const { name, description } = originalLayer.feature.properties
     // const icon = getIcon(layer.feature.geometry.type)
     useLayersStore().saveLayer(layerToSave)
+
+    // onLayerClick({ target: layer })
   }
 
   const onLayerRotate = ({ layer, originalLayer }) => {

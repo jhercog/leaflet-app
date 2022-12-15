@@ -97,5 +97,5 @@ const debounceSaving = debounce(layer => (useLayersStore().saveLayer(layer))) //
 const selectLayer = () => {
   onLayerClick({ target: layer.value })
 }
-console.log(props.geometry)
+
 </script>
