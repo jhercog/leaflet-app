@@ -22,8 +22,8 @@ const { resolve } = require('path')
 module.exports = configure(function (ctx) {
   const ssl = ctx.dev ? {
     key: readFileSync(resolve(__dirname, 'SSL/ssl.key')),
-    cert: readFileSync(resolve(__dirname, 'SSL/ssl.cert')),
-    ca: readFileSync('/Users/jelenko/Library/Application Support/mkcert/rootCA.pem')
+    cert: readFileSync(resolve(__dirname, 'SSL/ssl.cert'))
+    // ca: readFileSync('/Users/jelenko/Library/Application Support/mkcert/rootCA.pem')
   } : true
   // console.log(process.version)
   return {
