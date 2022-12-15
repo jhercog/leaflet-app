@@ -8,7 +8,9 @@
   "scripts": {
     "serve": "quasar serve --history --https -C SSL/ssl.cert -K SSL/ssl.key -p 8080 -i dist/spa/index.html",
     "lint": "eslint --ext .js,.vue ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "quasar build",
+    "deploy": "vercel"
   },
   "dependencies": {
     "@geoman-io/leaflet-geoman-free": "^2.13.1",

@@ -14,10 +14,10 @@ const { configure } = require('quasar/wrappers')
 const { readFileSync } = require('fs')
 const { resolve } = require('path')
 
-const env = require(resolve(__dirname, './.env.js'))
+// const env = require(resolve(__dirname, './.env.js'))
 // const nodeEnv = require(resolve(__dirname, `.env.${process.env.NODE_ENV}.js`))
 // const env = Object.assign(commonEnv, nodeEnv)
-Object.assign(process.env, env)
+// Object.assign(process.env, env)
 
 module.exports = configure(function (ctx) {
   return {
@@ -57,8 +57,11 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
+
       vueRouterMode: 'history', // available values: 'hash', 'history'
-      env,
+      env: {
+        MAPBOX_API_KEY: 'pk.eyJ1IjoiYmVyYmEtYXBwIiwiYSI6ImNsNG9hZXpvNjA1dncza241bTlnMXYxdmIifQ.7uBpBANjpqkA3otPWmu7Ug'
+      },
       // transpile: false,
       // publicPath: '/',
 
