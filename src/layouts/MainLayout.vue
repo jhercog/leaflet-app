@@ -97,7 +97,7 @@
           href="https://geoman.io/"
           target="_blank"
         >Geoman</a> · <a
-          href="https://https://dexie.org/"
+          href="https://dexie.org/"
           target="_blank"
         >Dexie</a>
       </div>
