@@ -26,7 +26,7 @@ const ssl = {
 }
 
 module.exports = configure(function (ctx) {
-  console.log(ctx)
+  // console.log(process.version)
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
     supportTS: false,
