@@ -7,7 +7,7 @@ const routes = [
       {
         path: '',
         name: 'Home',
-        meta: { title: 'Vue - Quasar - Leaflet Implementation', description: 'That project for USA' },
+        meta: { title: 'Open Range Demo', description: 'That project for USA' },
         component: () => import('pages/Home.vue')
       }
     ]

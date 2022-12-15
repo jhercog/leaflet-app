@@ -1,8 +1,8 @@
 {
   "name": "leaflet-app",
   "version": "0.0.1",
-  "description": "Leaflet implemntation",
-  "productName": "Quasar App",
+  "description": "Vue - Quasar - Leaflet - Geoman - Dexie Implementation",
+  "productName": "Open Range",
   "author": "jhercog <jelenko.hercog@gmail.com>",
   "private": true,
   "scripts": {
