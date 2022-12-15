@@ -7,17 +7,26 @@
   <q-expansion-item
     expand-separator
     expand-icon-toggle
-    clickable
     :active="selected"
-    @click="selectLayer"
+    class="q-drawer-item"
+    :header-class="[selected ? 'q-item-active' : '']"
+    expand-icon-class="q-drawer-item__expand"
   >
     <template #header>
       <q-item-section
         v-if="featureIcon"
         avatar
         :style="{minWidth: 0}"
+        class="q-drawer-item__button-avatar"
       >
-        <q-icon :name="featureIcon" />
+        <q-btn
+          class="q-pa-none"
+          square
+          flat
+          @click="selectLayer"
+        >
+          <q-icon :name="featureIcon" />
+        </q-btn>
       </q-item-section>
 
       <q-item-section>
@@ -79,6 +88,7 @@ const featureName = computed({
   get: () => props.featureName,
   set: val => {
     layer.value.options.featureName = val
+    layer.value.pm.options.featureName = val
     layer.value.feature.properties.options.featureName = val
     debounceSaving(layer.value)
   }
@@ -87,6 +97,7 @@ const featureDescription = computed({
   get: () => props.featureDescription,
   set: val => {
     layer.value.options.featureDescription = val
+    layer.value.pm.options.featureDescription = val
     layer.value.feature.properties.options.featureDescription = val
     debounceSaving(layer.value)
   }
@@ -95,7 +106,12 @@ const featureDescription = computed({
 const debounceSaving = debounce(layer => (useLayersStore().saveLayer(layer))) // eslint-disable-line
 
 const selectLayer = () => {
-  onLayerClick({ target: layer.value })
+  if (props.selected) {
+    console.log('selected', layer.value)
+    layer.value.pm.disable()
+  } else {
+    onLayerClick({ target: layer.value })
+  }
 }
 
 </script>

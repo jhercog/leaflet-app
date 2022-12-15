@@ -33,6 +33,13 @@
       <q-scroll-area :style="{ paddingTop: `${headerHeight}px` }">
         <q-list class="q-list--drawer">
           <q-item v-if="layers.length === 0">
+            <q-item-section
+              avatar
+              :style="{ minWidth: 0 }"
+            >
+              <q-icon name="mdi-layers-off-outline" />
+            </q-item-section>
+
             <q-item-section>
               <q-item-label class="text-bold">
                 No Layers
@@ -59,7 +66,7 @@
             avatar
             :style="{ minWidth: 0 }"
           >
-            <q-icon name="mdi-shape" />
+            <q-icon name="mdi-layers" />
           </q-item-section>
 
           <q-item-section>

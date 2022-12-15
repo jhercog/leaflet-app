@@ -61,8 +61,9 @@ export const getGeoJsonFromLayer = function (layer) {
     geoJson.properties = {}
   }
 
+  console.log('getGeoJsonFromLayer', layer)
   const options = this.$clone(merge(geoJson.properties.options, layer.options, {
-    // _id: layer.pm.options.featureId,
+    _id: layer.pm.options.featureId,
     featureName: layer.pm.options.featureName,
     featureDescription: layer.pm.options.featureDescription,
     featureIcon: layer.pm.options.featureIcon
@@ -92,7 +93,6 @@ export const getGeoJsonFromLayer = function (layer) {
 }
 
 export const saveLayer = async function (layer) {
-  // console.log('Layer to save', layer)
   const layerToSave = merge(this.getGeoJsonFromLayer(layer), {
     _id: layer.pm.options.featureId
   })
@@ -101,7 +101,7 @@ export const saveLayer = async function (layer) {
   features[featureIndex] = layerToSave
   this.$patch({ features })
 
-  // console.log('Layer to save', layerToSave)
+  console.log('Layer to save', this.getGeoJsonFromLayer(layer))
 
   try {
     await layers.put(layerToSave)
