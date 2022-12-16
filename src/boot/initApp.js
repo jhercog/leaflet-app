@@ -1,13 +1,14 @@
+import $l from 'leaflet/dist/leaflet-src.js'
+import '@geoman-io/leaflet-geoman-free'
+import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css'
+import 'leaflet/dist/leaflet.css'
+import 'vue-json-pretty/lib/styles.css'
 import { boot } from 'quasar/wrappers'
 import { toRaw } from 'vue'
 import { useAppStore, useLayersStore } from 'stores'
 import { db } from 'db'
 import { nanoid } from 'nanoid'
 import { useDevicePixelRatio } from '@vueuse/core'
-import $l from 'leaflet/dist/leaflet-src.js'
-import 'leaflet/dist/leaflet.css'
-import '@geoman-io/leaflet-geoman-free'
-import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css'
 
 import { liveQuery } from 'dexie'
 

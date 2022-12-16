@@ -28,7 +28,7 @@
     <q-drawer
       v-model="drawerOpened"
       side="right"
-      :width="400"
+      :width="300"
     >
       <q-scroll-area :style="{ paddingTop: `${headerHeight}px` }">
         <q-list class="q-list--drawer">

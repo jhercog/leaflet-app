@@ -52,7 +52,13 @@
     </template>
     <q-card class="bg-primary-10 text-primary-4">
       <q-card-section>
-        <pre>{{ $drawingGroup.getLayer(props._leaflet_id).toGeoJSON() }}</pre>
+        <VueJsonPretty
+          class="q-json-tree"
+          :data="jsonData"
+          :deep-collapse-children="true"
+          :show-length="true"
+          :editable="true"
+        />
       </q-card-section>
     </q-card>
   </q-expansion-item>
@@ -64,6 +70,7 @@ import { computed } from 'vue'
 import { debounce } from 'quasar'
 import { useAppStore, useLayersStore } from 'stores'
 import { useLayers } from 'composables'
+import VueJsonPretty from 'vue-json-pretty' // eslint-disable-line
 
 const { onLayerClick } = useLayers()
 
@@ -113,5 +120,9 @@ const selectLayer = () => {
     onLayerClick({ target: layer.value })
   }
 }
+
+const jsonData = computed(() => {
+  return $drawingGroup.value.getLayer(props._leaflet_id).toGeoJSON()
+})
 
 </script>

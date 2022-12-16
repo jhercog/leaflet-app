@@ -1,6 +1,6 @@
 <template>
   <div
-    id="mapContainer"
+    id="map-container"
     :style="{fontFamily: 'IbM Plex Sans'}"
     class="bg-primary-9"
   >

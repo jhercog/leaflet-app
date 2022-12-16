@@ -100,7 +100,7 @@ export const useMap = () => {
     // const currentGeolocation = useAppStore().currentGeolocation
 
     if (!$map.value) {
-      $map.value = $l.map('mapContainer', {
+      $map.value = $l.map('map-container', {
         maxBounds: [[-90, -180], [90, 180]],
         zoomControl: false,
         doubleClickZoom: false,
@@ -152,7 +152,7 @@ export const useMap = () => {
   }
 
   const destroyMap = () => {
-    const mapContainer = $l.DomUtil.get('mapContainer')
+    const mapContainer = $l.DomUtil.get('map-container')
     if (mapContainer?._leaflet_id != null) {
       mapContainer._leaflet_id = null
     }

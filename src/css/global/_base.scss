@@ -195,10 +195,6 @@ a {
   }
 }
 
-#mapContainer {
-  background: var(--q-primary-9);
-}
-
 .q-controls {
   display: flex;
   position: absolute;
@@ -300,5 +296,51 @@ a {
   .leaflet-control {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+}
+
+.q-json-tree {
+  font-family: "IBM Plex Mono", Monaco, Menlo, Consolas, Bitstream Vera Sans Mono, monospace !important;
+  font-size: 0.75rem !important;
+
+  .vjs-tree-node {
+    transition: background 0.3s ease-out;
+    &.is-highlight,
+    &:hover {
+      background-color: var(--q-primary-9);
+    }
+    .vjs-tree-brackets {
+      color: var(--q-primary-2);
+      &:hover {
+        color: $deep-orange-10;
+      }
+    }
+    .vjs-indent-unit {
+      &.has-line {
+        border-left: 1px solid var(--q-primary-9);
+      }
+    }
+
+    .vjs-value {
+      input {
+        color: var(--q-primary-2);
+        padding: 0.125rem 0.25rem !important;
+        border: none !important;
+        border-radius: 0.25rem;
+        background: var(--q-primary-8);
+      }
+      &-number {
+        color: $purple-4;
+      }
+      &-string {
+        color: $green-6;
+      }
+      &-boolean {
+        color: $deep-orange-10;
+      }
+      &-null {
+        color: $pink-4;
+      }
+    }
   }
 }
