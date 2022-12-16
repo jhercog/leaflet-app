@@ -13,7 +13,7 @@
 <script setup>
 import { reactive } from 'vue' // eslint-disable-line
 import { useControls } from 'composables'
-import MapControl from 'components/maps/MapControl.vue'
+import MapControl from 'components/maps/toolbars/MapControl.vue'
 
 const ttPos = 'top'
 const {

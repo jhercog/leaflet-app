@@ -9,6 +9,7 @@
     "serve": "quasar serve --history --https -C SSL/ssl.cert -K SSL/ssl.key -p 8080 -i dist/spa/index.html",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
+    "dev": "quasar dev",
     "build": "quasar build",
     "deploy": "vercel"
   },
@@ -26,6 +27,7 @@
     "pinia-orm": "^1.3.0",
     "quasar": "^2.10.2",
     "vue": "^3.2.45",
+    "vue-json-pretty": "^1.9.3",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

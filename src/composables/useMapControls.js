@@ -1,6 +1,6 @@
 import { ref, resolveComponent, inject } from 'vue' // eslint-disable-line
 import { useComponentHtml } from 'composables'
-import MapControl from 'src/components/maps/MapControl.vue'
+import MapControl from 'components/maps/toolbars/MapControl.vue'
 
 export const useMapControls = () => {
   const $l = inject('$l')

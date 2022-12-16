@@ -20,9 +20,9 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import { useMap } from 'composables'
-import Loader from 'components/maps/Loader.vue'
-import MapControlsLeft from 'components/maps/MapControlsLeft.vue'
-import MapControlsBottom from 'components/maps/MapControlsBottom.vue'
+import Loader from 'components/Loader.vue'
+import MapControlsLeft from 'components/maps/toolbars/MapControlsLeft.vue'
+import MapControlsBottom from 'components/maps/toolbars/MapControlsBottom.vue'
 
 const { loadingMap, createMap, destroyMap, resizeMap, onKeydown, onMapClick } = useMap() // eslint-disable-line
 // const loadingMap = ref(true)

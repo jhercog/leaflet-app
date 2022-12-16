@@ -30,8 +30,8 @@
 import { reactive, shallowRef } from 'vue'
 // import { useAppStore } from 'stores'
 import { useControls } from 'composables'
-import MapControl from 'components/maps/MapControl.vue'
-import ColorPicker from 'components/maps/ColorPicker.vue'
+import MapControl from 'components/maps/toolbars/MapControl.vue'
+import ColorPicker from 'components/maps/toolbars/ColorPicker.vue'
 
 // const { draw } = useAppStore()
 const ttPos = 'right'

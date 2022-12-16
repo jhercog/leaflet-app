@@ -46,7 +46,7 @@
 <script setup>
 import { computed } from 'vue'
 import { isEmpty } from 'lodash'
-import { useAppStore } from 'src/stores'
+import { useAppStore } from 'stores'
 
 const props = defineProps({
   name: { type: String, default: null },
